@@ -14,10 +14,18 @@ var FormView = {
     // More info: https://mdn.io/preventDefault.
     event.preventDefault();
 
-    // TODO: Currently, this is all handleSubmit does.
-    // Make this function actually send a message to Parse.
-    console.log('click!');
+   // create an instance of the message  with user text and room
+   let message = {
+     username:  App.username ||'Me',
+     text: FormView.$form.find('#message').val(),
+     roomname: 'lobby'
+   }
+    
+   Parse.create(message, () => {
+     Messages.add(message, MessagesView.render)
+   })
   },
+  
 
   setStatus: function(active) {
     var status = active ? 'true' : null;
@@ -25,3 +33,4 @@ var FormView = {
   }
 
 };
+

@@ -1,12 +1,45 @@
-// This object houses all the message _data_ for the app.
-// Treat it like a data structure - add methods to interact
-// with and manipulate the data.
+
 var Messages = {
 
-  // TODO: Define how you want to store your messages.
-  storage: null
+  storage: {},
+  
+  items: function(){
+ 
+    return _.chain(Object.values(Messages.storage)).sortBy('createdAt');
+  },
 
-  // TODO: Define methods which allow you to retrieve from,
-  // add to, and generally interact with the messages.
+  update: function(messages, callback = ()=>{}){
+    
+    let length = Object.values(Messages.storage).length; 
+
+    for(let message of messages) {
+      Messages.storage[message.objectId] = Messages.check(message);
+    }
+
+    
+    if(length !== Object.values(Messages.storage).length ){
+      callback(Messages.items());
+    }
+  },
+
+  add : function(message, callback){
+
+   Messages.storage[message.objectId] = message;
+   callback(Messages.items());
+  },
+
+  check: function(message) {
+    message.text = message.text || ''
+    message.username = message.username || 'anonymous'
+    message.roomname = message.roomname || ''
+    return message
+  }
+
+
+  
 
 };
+
+
+
+

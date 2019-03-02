@@ -20,6 +20,8 @@ var App = {
 
     // TODO: Make sure the app loads data from the API
     // continually, instead of just once at the start.
+    // interval on 3 sec method of fetch
+    setInterval(App.fetch, 3000)
   },
 
   fetch: function(callback = ()=>{}) {
@@ -29,6 +31,12 @@ var App = {
 
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
+
+     // update rooms
+
+     // update messages pass the results array and run render on each
+     Messages.update(data.results, MessagesView.render) // changed to messageSView
+     
 
       callback();
     });
@@ -44,3 +52,8 @@ var App = {
     FormView.setStatus(false);
   }
 };
+
+
+
+
+
